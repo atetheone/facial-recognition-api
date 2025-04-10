@@ -1,0 +1,26 @@
+services:
+  facial-recognition-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: facial-recognition-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - FLASK_ENV=prod
+      - DEBUG=false
+      - PORT=5000
+      - HOST=0.0.0.0
+    restart: unless-stopped
+
+  # Optionnel: ajout d'un service frontend si nécessaire
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - facial-recognition-api
